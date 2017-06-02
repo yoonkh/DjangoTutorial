@@ -36,8 +36,11 @@ def detail(request, question_id):
 
 
 def results(request, question_id):
-    response = "You're looking at the results of question %s."
-    return HttpResponse(response % question_id)
+    question = get_object_or_404(Question, pk=question_id)
+    context = {
+        'question': question,
+    }
+    return render(request, 'polls/results.html', context)
 
 
 def vote(request, question_id):
@@ -59,4 +62,4 @@ def vote(request, question_id):
 
 
     else:
-        return HttpResponse("You're voting on questoin %s." % question_id)
+        return HttpResponse("You're voting on question %s." % question_id)
